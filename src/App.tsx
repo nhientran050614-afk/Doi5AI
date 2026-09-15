@@ -12,7 +12,8 @@ import {
   Cpu,
   Radio,
   Layers,
-  ArrowRight
+  ArrowRight,
+  Cog
 } from 'lucide-react';
 import { Header } from './components/Header';
 import { MessageInputSection } from './components/MessageInputSection';
@@ -22,6 +23,8 @@ import { ScenarioGame } from './components/ScenarioGame';
 import { MessageComparator } from './components/MessageComparator';
 import { Demo3MinGuide } from './components/Demo3MinGuide';
 import { CyberClickEffect } from './components/CyberClickEffect';
+import { OnboardingModal } from './components/OnboardingModal';
+import { Team5IntroSplash } from './components/Team5IntroSplash';
 import { SAMPLE_MESSAGES, SampleMessageItem } from './data/sampleMessages';
 import { 
   AnalysisResult, 
@@ -33,7 +36,15 @@ import { checkMessageRules } from './utils/ruleEngine';
 import { cyberAudio } from './utils/cyberAudio';
 
 export default function App() {
+  const [showIntro, setShowIntro] = useState<boolean>(true);
   const [currentTab, setCurrentTab] = useState<AppTab>('analyzer');
+  const [showOnboarding, setShowOnboarding] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem('cyber_onboarding_dismissed_v2') !== 'true';
+    } catch {
+      return true;
+    }
+  });
 
   // Input & Pre-Evaluation state
   const defaultSample = SAMPLE_MESSAGES[0]; // Demo 3-phút message
@@ -177,8 +188,23 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-cyan-500 selection:text-black">
+      {/* Intro Splash with Water-Blue Gear & 'PROJECT BY TEAM 5' */}
+      {showIntro && (
+        <Team5IntroSplash onComplete={() => setShowIntro(false)} />
+      )}
+
       {/* Global Interactive Cyber Click Shockwave & Sparks */}
       <CyberClickEffect />
+
+      {/* Onboarding / Quick Start Guide Modal */}
+      <OnboardingModal
+        isOpen={showOnboarding && !showIntro}
+        onClose={() => setShowOnboarding(false)}
+        onNavigateTab={(tab) => {
+          cyberAudio.playClick();
+          setCurrentTab(tab);
+        }}
+      />
 
       {/* Top Header */}
       <Header 
@@ -187,6 +213,8 @@ export default function App() {
           cyberAudio.playClick();
           setCurrentTab(tab);
         }} 
+        onOpenGuide={() => setShowOnboarding(true)}
+        onReplayIntro={() => setShowIntro(true)}
       />
 
       {/* Main Content Area */}
@@ -214,18 +242,34 @@ export default function App() {
                 </p>
               </div>
 
-              <button
-                type="button"
-                id="btn-goto-demo-quick"
-                onClick={() => {
-                  cyberAudio.playClick();
-                  setCurrentTab('demo3min');
-                }}
-                className="shrink-0 px-4 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 text-white font-mono-tech text-xs font-semibold transition-all flex items-center gap-2 shadow-lg shadow-cyan-950/40 border border-cyan-400/40 cursor-pointer"
-              >
-                <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-                <span>XEM DEMO 3 PHÚT CHUẨN</span>
-              </button>
+              <div className="flex items-center gap-2 flex-wrap shrink-0">
+                <button
+                  type="button"
+                  id="btn-banner-open-guide"
+                  onClick={() => {
+                    cyberAudio.playClick();
+                    setShowOnboarding(true);
+                  }}
+                  className="px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 font-mono-tech text-xs font-semibold transition-all flex items-center gap-1.5 border border-slate-700 hover:border-cyan-500/50 cursor-pointer"
+                  title="Mở hướng dẫn sử dụng"
+                >
+                  <HelpCircle className="w-3.5 h-3.5 text-cyan-400" />
+                  <span>HƯỚNG DẪN</span>
+                </button>
+
+                <button
+                  type="button"
+                  id="btn-goto-demo-quick"
+                  onClick={() => {
+                    cyberAudio.playClick();
+                    setCurrentTab('demo3min');
+                  }}
+                  className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 text-white font-mono-tech text-xs font-semibold transition-all flex items-center gap-2 shadow-lg shadow-cyan-950/40 border border-cyan-400/40 cursor-pointer"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+                  <span>DEMO 3 PHÚT</span>
+                </button>
+              </div>
             </div>
 
             {/* Step 1: Input Section */}
@@ -329,10 +373,24 @@ export default function App() {
               <span className="font-semibold text-slate-200">
                 AI Cảnh Báo Tin Nhắn Đáng Ngờ
               </span>
-              <span className="text-slate-400">— Nền tảng thực hành an toàn số dành cho học sinh THCS và giáo viên</span>
+              <span className="text-slate-400 hidden md:inline">— Nền tảng thực hành an toàn số dành cho học sinh THCS và giáo viên</span>
             </div>
-            <div className="font-mono-tech text-[10px] text-slate-400">
-              MÔ PHỎNG GIÁO DỤC • AN TOÀN TUYỆT ĐỐI • KHÔNG LƯU DỮ LIỆU CÁ NHÂN
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={() => {
+                  cyberAudio.playClick();
+                  setShowIntro(true);
+                }}
+                className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-cyan-950/70 hover:bg-cyan-900/90 text-cyan-300 border border-cyan-500/40 text-[10px] font-mono-tech transition-all cursor-pointer"
+                title="Nhấn để xem lại màn hình giới thiệu"
+              >
+                <Cog className="w-3 h-3 text-cyan-400 animate-spin-slow" />
+                <span className="font-bold">PROJECT BY TEAM 5</span>
+              </button>
+              <div className="font-mono-tech text-[10px] text-slate-400 hidden sm:block">
+                AN TOÀN TUYỆT ĐỐI • KHÔNG LƯU DỮ LIỆU CÁ NHÂN
+              </div>
             </div>
           </div>
         </div>

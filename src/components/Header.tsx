@@ -10,7 +10,9 @@ import {
   Radio,
   Volume2,
   VolumeX,
-  Terminal
+  Terminal,
+  BookOpen,
+  Cog
 } from 'lucide-react';
 import { AppTab } from '../types';
 import { cyberAudio } from '../utils/cyberAudio';
@@ -18,9 +20,11 @@ import { cyberAudio } from '../utils/cyberAudio';
 interface HeaderProps {
   currentTab: AppTab;
   onSelectTab: (tab: AppTab) => void;
+  onOpenGuide?: () => void;
+  onReplayIntro?: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ currentTab, onSelectTab }) => {
+export const Header: React.FC<HeaderProps> = ({ currentTab, onSelectTab, onOpenGuide, onReplayIntro }) => {
   const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
 
   const toggleSound = () => {
@@ -87,10 +91,40 @@ export const Header: React.FC<HeaderProps> = ({ currentTab, onSelectTab }) => {
             </span>
           </div>
 
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex items-center gap-2.5 shrink-0">
             <span className="text-slate-400 text-[10px] hidden lg:inline tracking-normal font-sans">
               ENCRYPTED SANDBOX • KHÔNG LƯU DỮ LIỆU CÁ NHÂN
             </span>
+            {onOpenGuide && (
+              <button
+                type="button"
+                id="btn-open-guide"
+                onClick={() => {
+                  cyberAudio.playClick();
+                  onOpenGuide();
+                }}
+                className="flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-cyan-950/80 hover:bg-cyan-900 text-cyan-300 border border-cyan-600/50 hover:border-cyan-400 transition-colors cursor-pointer text-[10px] font-semibold"
+                title="Mở bảng hướng dẫn sử dụng nền tảng"
+              >
+                <BookOpen className="w-3 h-3 text-cyan-400" />
+                <span>Hướng Dẫn</span>
+              </button>
+            )}
+            {onReplayIntro && (
+              <button
+                type="button"
+                id="btn-replay-team5"
+                onClick={() => {
+                  cyberAudio.playClick();
+                  onReplayIntro();
+                }}
+                className="flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-cyan-950/80 hover:bg-cyan-900 text-cyan-300 border border-cyan-500/50 hover:border-cyan-300 transition-colors cursor-pointer text-[10px] font-mono-tech"
+                title="Xem lại màn hình giới thiệu Project by Team 5"
+              >
+                <Cog className="w-3 h-3 text-cyan-400 animate-spin-slow" />
+                <span className="font-bold">TEAM 5</span>
+              </button>
+            )}
             <button
               type="button"
               id="btn-toggle-sound"
@@ -134,6 +168,20 @@ export const Header: React.FC<HeaderProps> = ({ currentTab, onSelectTab }) => {
                   <Terminal className="w-2.5 h-2.5" />
                   EDTECH v2.4
                 </span>
+                {onReplayIntro && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      cyberAudio.playClick();
+                      onReplayIntro();
+                    }}
+                    className="hidden sm:inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[10px] font-mono-tech font-bold bg-cyan-950/80 hover:bg-cyan-900 text-cyan-300 border border-cyan-500/60 shadow-xs cursor-pointer hover:border-cyan-400 transition-colors"
+                    title="Dự án thực hiện bởi Team 5 - Nhấn để xem intro"
+                  >
+                    <Cog className="w-3 h-3 text-cyan-400 animate-spin-slow" />
+                    <span>PROJECT BY TEAM 5</span>
+                  </button>
+                )}
               </div>
               <p className="text-xs text-slate-400 hidden sm:flex items-center gap-1.5 mt-0.5 leading-normal">
                 <Cpu className="w-3 h-3 text-indigo-400 shrink-0" />
