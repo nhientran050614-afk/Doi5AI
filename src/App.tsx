@@ -23,7 +23,6 @@ import { ScenarioGame } from './components/ScenarioGame';
 import { MessageComparator } from './components/MessageComparator';
 import { Demo3MinGuide } from './components/Demo3MinGuide';
 import { CyberClickEffect } from './components/CyberClickEffect';
-import { CyberCursorTrail } from './components/CyberCursorTrail';
 import { OnboardingModal } from './components/OnboardingModal';
 import { Team5IntroSplash } from './components/Team5IntroSplash';
 import { SAMPLE_MESSAGES, SampleMessageItem } from './data/sampleMessages';
@@ -196,9 +195,6 @@ export default function App() {
 
       {/* Global Interactive Cyber Click Shockwave & Sparks */}
       <CyberClickEffect />
-
-      {/* Cyber Cursor Particle Trail (Water-Blue / Cyan Glow) */}
-      <CyberCursorTrail />
 
       {/* Onboarding / Quick Start Guide Modal */}
       <OnboardingModal
