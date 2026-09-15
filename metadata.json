@@ -1,0 +1,6 @@
+{
+  "name": "AI Cảnh Báo Tin Nhắn Đáng Ngờ",
+  "description": "Công cụ giáo dục tương tác giúp học sinh THCS nhận biết dấu hiệu lừa đảo trong tin nhắn giả lập, rèn luyện tư duy phản biện và lựa chọn hành động an toàn.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

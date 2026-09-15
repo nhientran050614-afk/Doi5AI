@@ -1,0 +1,176 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Be Vietnam Pro', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #e2e8f0;
+    background-color: #080c14;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    position: relative;
+    min-height: 100vh;
+  }
+
+  /* Fixed hardware-accelerated background layer: eliminates all scroll repaint lag */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    transform: translateZ(0);
+    will-change: transform;
+    background-image: 
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(30, 58, 138, 0.18), transparent),
+      radial-gradient(circle at 100% 100%, rgba(14, 165, 233, 0.04), transparent 40%),
+      linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+    background-color: #080c14;
+  }
+
+  /* Refined typographic scales */
+  h1, h2, h3, h4, h5, h6 {
+    letter-spacing: -0.02em;
+    font-feature-settings: "cv02", "cv03", "cv04";
+  }
+
+  p, li, span, button, input, textarea {
+    letter-spacing: -0.005em;
+  }
+}
+
+/* High-tech precision typography */
+.font-mono-tech {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-feature-settings: "tnum" 1, "zero" 1;
+  letter-spacing: -0.01em;
+}
+
+/* 60fps GPU-accelerated scanline animation */
+@keyframes cyberScanGPU {
+  0% {
+    transform: translateY(0);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(140px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(280px);
+    opacity: 0.2;
+  }
+}
+
+.animate-cyber-scan {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #38bdf8, #818cf8, transparent);
+  box-shadow: 0 0 8px #38bdf8;
+  animation: cyberScanGPU 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+
+/* Low-overhead hardware pulse */
+@keyframes techPulseGPU {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(0.92);
+  }
+}
+
+.animate-tech-pulse {
+  animation: techPulseGPU 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  will-change: transform, opacity;
+}
+
+/* Smooth GPU accelerated transitions */
+.smooth-gpu {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Tactile Cyber Press & Click feedback for all interactive elements */
+button, 
+[role="button"], 
+a, 
+input[type="button"], 
+input[type="submit"], 
+.cursor-pointer {
+  transition: transform 0.08s cubic-bezier(0.2, 0, 0, 1), filter 0.08s ease, box-shadow 0.08s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:active, 
+[role="button"]:active, 
+.cursor-pointer:active {
+  transform: scale(0.965);
+  filter: brightness(1.18);
+}
+
+/* Dedicated fast GPU animations for click shockwaves */
+@keyframes cyberRingExpand {
+  0% {
+    transform: translate(-50%, -50%) scale(0.2);
+    opacity: 0.9;
+  }
+  60% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.8);
+    opacity: 0;
+  }
+}
+
+@keyframes cyberSparkFade {
+  0% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0.2);
+    opacity: 0;
+  }
+}
+
+@keyframes cyberCrosshairOut {
+  0% {
+    transform: scale(0.5);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+.animate-cyber-ring {
+  animation: cyberRingExpand 0.38s cubic-bezier(0.1, 0.7, 0.1, 1) forwards;
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+
+.animate-cyber-spark {
+  animation: cyberSparkFade 0.28s ease-out forwards;
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+
+.animate-cyber-crosshair {
+  animation: cyberCrosshairOut 0.35s cubic-bezier(0.1, 0.8, 0.2, 1) forwards;
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+
