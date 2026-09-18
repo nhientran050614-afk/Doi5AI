@@ -66,4 +66,4 @@ export interface GameScenario {
   safeActionGuide: string;
 }
 
-export type AppTab = 'analyzer' | 'game' | 'comparator' | 'demo3min';
+export type AppTab = 'analyzer' | 'game' | 'comparator';

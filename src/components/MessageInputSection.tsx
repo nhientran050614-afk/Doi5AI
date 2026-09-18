@@ -53,19 +53,16 @@ export const MessageInputSection: React.FC<MessageInputSectionProps> = ({
 
       {/* Section Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-800/80">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-indigo-950 border border-indigo-500/40 text-cyan-300 flex items-center justify-center font-mono-tech font-semibold text-sm shadow-xs">
+        <div className="flex items-center gap-2.5">
+          <div className="w-7 h-7 rounded-lg bg-indigo-950 border border-indigo-500/40 text-cyan-300 flex items-center justify-center font-mono-tech font-bold text-xs shadow-xs">
             01
           </div>
           <div>
-            <h2 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
-              Trang Nhập Nội Dung Tin Nhắn Giả Lập
-              <span className="text-[11px] font-mono-tech font-normal text-cyan-400 bg-cyan-950/60 px-2 py-0.5 rounded border border-cyan-800/60 hidden md:inline">
-                SIMULATION_PACKET_INPUT
-              </span>
+            <h2 className="text-base font-bold text-white flex items-center gap-2">
+              Nhập Tin Nhắn Kiểm Tra
             </h2>
-            <p className="text-xs text-slate-300">
-              Chọn mẫu tình huống có sẵn hoặc dán tin nhắn SMS/Zalo để phân tích
+            <p className="text-xs text-slate-400">
+              Chọn mẫu tình huống hoặc dán nội dung tin nhắn để kiểm tra
             </p>
           </div>
         </div>
@@ -76,40 +73,35 @@ export const MessageInputSection: React.FC<MessageInputSectionProps> = ({
             type="button"
             id="btn-input-edit-mode"
             onClick={() => handleModeSwitch(false)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
               !isPreviewMode
                 ? 'bg-indigo-600 text-white shadow-xs border border-indigo-400/40'
                 : 'text-slate-400 hover:text-slate-200'
             }`}
           >
             <Edit3 className="w-3.5 h-3.5" />
-            <span>Soạn thảo / Sửa</span>
+            <span>Soạn thảo</span>
           </button>
           <button
             type="button"
             id="btn-input-preview-mode"
             onClick={() => handleModeSwitch(true)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
               isPreviewMode
                 ? 'bg-indigo-600 text-white shadow-xs border border-indigo-400/40'
                 : 'text-slate-400 hover:text-slate-200'
             }`}
           >
             <Eye className="w-3.5 h-3.5" />
-            <span>Mô phỏng SMS</span>
+            <span>Xem giả lập</span>
           </button>
         </div>
       </div>
 
-      {/* Mandatory Safety Notice Banner */}
-      <div className="mb-4 p-3.5 rounded-xl bg-amber-950/30 border border-amber-600/40 text-amber-200 flex items-start gap-3 text-xs sm:text-sm leading-relaxed">
-        <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
-        <div>
-          <span className="font-bold text-amber-300 block mb-0.5">
-            Lưu ý an toàn bắt buộc cho học sinh:
-          </span>
-          Không nhập mật khẩu thật, mã OTP thật hay thông tin cá nhân. Hệ thống hoạt động trong môi trường mô phỏng an toàn tuyệt đối phục vụ học tập an toàn mạng.
-        </div>
+      {/* Compact Safety Notice */}
+      <div className="mb-3.5 px-3 py-2 rounded-xl bg-amber-950/20 border border-amber-600/30 text-amber-200 flex items-center gap-2 text-xs">
+        <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
+        <span><strong>Lưu ý:</strong> Không nhập mật khẩu, mã OTP thật hoặc thông tin cá nhân.</span>
       </div>
 
       {/* Sensitive Input Warning if detected */}

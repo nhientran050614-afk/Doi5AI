@@ -5,7 +5,6 @@ import {
   Search, 
   Gamepad2, 
   Scale, 
-  PlayCircle,
   Cpu,
   Radio,
   Volume2,
@@ -46,14 +45,6 @@ export const Header: React.FC<HeaderProps> = ({ currentTab, onSelectTab, onOpenG
       code: 'SCAN_CORE',
       icon: Search,
       desc: '5 Kính lọc AI & Nhận xét',
-    },
-    {
-      id: 'demo3min' as AppTab,
-      label: 'Demo 3 Phút',
-      code: 'DEMO_FLOW',
-      icon: PlayCircle,
-      desc: 'Quy trình chuẩn mực',
-      badge: 'Chuẩn sư phạm',
     },
     {
       id: 'game' as AppTab,
@@ -209,17 +200,6 @@ export const Header: React.FC<HeaderProps> = ({ currentTab, onSelectTab, onOpenG
                 >
                   <Icon className={`w-4 h-4 ${isActive ? 'text-cyan-300' : 'text-slate-400'}`} />
                   <span>{tab.label}</span>
-                  {tab.badge && (
-                    <span
-                      className={`text-[9px] px-1.5 py-0.5 rounded font-mono-tech font-bold uppercase tracking-wider ${
-                        isActive
-                          ? 'bg-cyan-950 text-cyan-300 border border-cyan-500/40'
-                          : 'bg-amber-950/80 text-amber-300 border border-amber-600/50'
-                      }`}
-                    >
-                      {tab.badge}
-                    </span>
-                  )}
                 </button>
               );
             })}

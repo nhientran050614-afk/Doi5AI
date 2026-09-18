@@ -179,57 +179,43 @@ export const Team5IntroSplash: React.FC<Team5IntroSplashProps> = ({ onComplete }
           <div className="absolute w-20 h-20 sm:w-24 sm:h-24 rounded-full border border-cyan-300/40 border-t-transparent animate-spin-slow-reverse pointer-events-none" />
         </div>
 
-        {/* CHỮ "PROJECT BY TEAM 5" XUẤT HIỆN TRÊN / CÙNG BÁNH RĂNG */}
-        <div className="space-y-2.5">
-          {/* Cyber Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/80 border border-cyan-400/50 shadow-lg shadow-cyan-950/60 text-cyan-300">
-            <Sparkles className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
-            <span className="text-[11px] font-mono-tech uppercase font-bold tracking-widest text-cyan-300">
-              CYBER_DEFENSE_LAB // KHOA HỌC KỸ THUẬT THCS
-            </span>
-          </div>
-
+        {/* CHỮ "PROJECT BY TEAM 5" XUẤT HIỆN DƯỚI BÁNH RĂNG */}
+        <div className="space-y-2">
           {/* MAIN PROMINENT TITLE: PROJECT BY TEAM 5 */}
           <div className="relative">
-            <h1 className="text-2xl sm:text-4xl font-extrabold tracking-wider font-mono-tech text-white uppercase drop-shadow-[0_2px_12px_rgba(6,182,212,0.8)]">
+            <h1 className="text-2xl sm:text-4xl font-extrabold tracking-wider font-mono-tech uppercase drop-shadow-[0_2px_12px_rgba(6,182,212,0.8)]">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-200 to-cyan-400">
                 PROJECT BY TEAM 5
               </span>
             </h1>
-            <div className="h-0.5 w-32 sm:w-44 mx-auto bg-gradient-to-r from-transparent via-cyan-400 to-transparent mt-2" />
+            <div className="h-0.5 w-28 sm:w-36 mx-auto bg-gradient-to-r from-transparent via-cyan-400 to-transparent mt-2" />
           </div>
 
-          {/* App Name & Slogan */}
-          <p className="text-xs sm:text-sm text-slate-300 font-medium max-w-sm mx-auto leading-relaxed">
-            AI Cảnh Báo Tin Nhắn Đáng Ngờ & Rèn Luyện Kỹ Năng Tự Bảo Vệ Trên Môi Trường Mạng
+          {/* App Name - Short & Crisp */}
+          <p className="text-xs sm:text-sm text-cyan-200/90 font-medium">
+            AI Cảnh Báo Tin Nhắn Đáng Ngờ
           </p>
 
-          {/* Loading status indicator */}
-          <div className="pt-3 flex flex-col items-center gap-2">
-            <div className="flex items-center gap-1.5 text-[11px] font-mono-tech text-cyan-400">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
-              <span>Đang khởi động hệ thống phân tích 5 Kính Lọc...</span>
-            </div>
-            
-            {/* High-tech progress bar */}
-            <div className="w-48 sm:w-56 h-1 rounded-full bg-slate-800 overflow-hidden border border-slate-700/60">
-              <div className="h-full bg-gradient-to-r from-indigo-500 via-cyan-400 to-emerald-400 w-full animate-[pulse_1s_ease-in-out_infinite]" />
+          {/* Subtle loading bar */}
+          <div className="pt-2 flex justify-center">
+            <div className="w-36 sm:w-44 h-1 rounded-full bg-slate-800 overflow-hidden border border-slate-700/50">
+              <div className="h-full bg-gradient-to-r from-cyan-400 via-sky-300 to-cyan-500 w-full animate-[pulse_1s_ease-in-out_infinite]" />
             </div>
           </div>
         </div>
 
         {/* Skip hint button */}
-        <div className="mt-8">
+        <div className="mt-6">
           <button
             type="button"
             onClick={(e) => {
               e.stopPropagation();
               handleSkip();
             }}
-            className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-slate-900/90 hover:bg-slate-800 text-slate-400 hover:text-cyan-300 text-xs font-mono-tech border border-slate-800 hover:border-cyan-500/50 transition-all cursor-pointer shadow-md"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-900/80 hover:bg-slate-800 text-slate-400 hover:text-cyan-300 text-xs font-mono-tech border border-slate-800 hover:border-cyan-500/40 transition-all cursor-pointer"
           >
-            <span>Nhấn bất kỳ để vào app</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <span>Bấm để vào nhanh</span>
+            <ArrowRight className="w-3 h-3" />
           </button>
         </div>
 

@@ -3,7 +3,6 @@ import {
   ShieldCheck, 
   Target, 
   GitCompare, 
-  Timer, 
   X, 
   CheckCircle2, 
   ArrowRight, 
@@ -20,7 +19,7 @@ import { cyberAudio } from '../utils/cyberAudio';
 interface OnboardingModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onNavigateTab: (tab: 'analyzer' | 'game' | 'compare' | 'demo3min') => void;
+  onNavigateTab: (tab: 'analyzer' | 'game' | 'comparator') => void;
 }
 
 export const OnboardingModal: React.FC<OnboardingModalProps> = ({
@@ -51,7 +50,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
     onClose();
   };
 
-  const handleStartPractice = (tab: 'analyzer' | 'game' | 'compare' | 'demo3min') => {
+  const handleStartPractice = (tab: 'analyzer' | 'game' | 'comparator') => {
     cyberAudio.playClick();
     if (dontShowAgain) {
       localStorage.setItem('cyber_onboarding_dismissed_v2', 'true');
@@ -90,11 +89,11 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                   SẴN SÀNG HUẤN LUYỆN
                 </span>
               </div>
-              <h2 className="text-base sm:text-xl font-bold text-white tracking-tight mt-1">
-                Hướng Dẫn Sử Dụng Nền Tảng "AI Cảnh Báo Tin Nhắn Đáng Ngờ"
+              <h2 className="text-base sm:text-lg font-bold text-white tracking-tight mt-1">
+                Hướng Dẫn Sử Dụng Nền Tảng
               </h2>
-              <p className="text-xs text-slate-300 mt-0.5">
-                Trang bị cho học sinh THCS tư duy phản biện và phản xạ tự bảo vệ trước cạm bẫy mạng số
+              <p className="text-xs text-slate-400 mt-0.5">
+                Rèn luyện kỹ năng nhận diện bẫy lừa đảo mạng cho học sinh THCS
               </p>
             </div>
           </div>
@@ -103,7 +102,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
             type="button"
             onClick={handleDismiss}
             className="text-slate-400 hover:text-white p-2 rounded-lg bg-slate-800/80 hover:bg-slate-700 transition-colors cursor-pointer shrink-0"
-            title="Đóng bảng hướng dẫn"
+            title="Đóng"
           >
             <X className="w-5 h-5" />
           </button>
@@ -117,14 +116,14 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
               cyberAudio.playClick();
               setActiveGuideTab('flow');
             }}
-            className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer border whitespace-nowrap ${
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border whitespace-nowrap ${
               activeGuideTab === 'flow'
-                ? 'bg-cyan-950/90 text-cyan-300 border-cyan-500/50 shadow-xs'
+                ? 'bg-cyan-950/90 text-cyan-300 border-cyan-500/50'
                 : 'text-slate-400 hover:text-slate-200 border-transparent hover:bg-slate-800/40'
             }`}
           >
             <Cpu className="w-3.5 h-3.5 text-cyan-400" />
-            <span>1. Quy Trình 3 Bước Cốt Lõi</span>
+            <span>1. Quy Trình 3 Bước</span>
           </button>
 
           <button
@@ -133,14 +132,14 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
               cyberAudio.playClick();
               setActiveGuideTab('modules');
             }}
-            className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer border whitespace-nowrap ${
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border whitespace-nowrap ${
               activeGuideTab === 'modules'
-                ? 'bg-indigo-950/90 text-indigo-300 border-indigo-500/50 shadow-xs'
+                ? 'bg-indigo-950/90 text-indigo-300 border-indigo-500/50'
                 : 'text-slate-400 hover:text-slate-200 border-transparent hover:bg-slate-800/40'
             }`}
           >
             <ShieldCheck className="w-3.5 h-3.5 text-indigo-400" />
-            <span>2. 4 Phòng Chức Năng Chính</span>
+            <span>2. 3 Phòng Chức Năng</span>
           </button>
 
           <button
@@ -149,91 +148,69 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
               cyberAudio.playClick();
               setActiveGuideTab('rules');
             }}
-            className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer border whitespace-nowrap ${
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer border whitespace-nowrap ${
               activeGuideTab === 'rules'
-                ? 'bg-emerald-950/90 text-emerald-300 border-emerald-500/50 shadow-xs'
+                ? 'bg-emerald-950/90 text-emerald-300 border-emerald-500/50'
                 : 'text-slate-400 hover:text-slate-200 border-transparent hover:bg-slate-800/40'
             }`}
           >
             <Lock className="w-3.5 h-3.5 text-emerald-400" />
-            <span>3. Nguyên Tắc An Toàn Cần Nhớ</span>
+            <span>3. 4 Nguyên Tắc Vàng</span>
           </button>
         </div>
 
         {/* Tab Content Body */}
-        <div className="p-4 sm:p-6 max-h-[58vh] overflow-y-auto space-y-4 text-xs sm:text-sm text-slate-300">
+        <div className="p-4 sm:p-5 max-h-[55vh] overflow-y-auto space-y-3 text-xs sm:text-sm text-slate-300">
           {/* TAB 1: 3-STEP FLOW */}
           {activeGuideTab === 'flow' && (
-            <div className="space-y-4">
-              <div className="p-3.5 rounded-xl bg-cyan-950/30 border border-cyan-800/50 text-cyan-200 flex items-center gap-2.5">
-                <Sparkles className="w-4 h-4 text-cyan-400 shrink-0" />
-                <span className="leading-relaxed">
-                  Nguyên lý cốt lõi: <strong>Học sinh tự phán đoán trước ➜ AI hỗ trợ đối chiếu bằng 5 Kính Lọc ➜ Rút ra kinh nghiệm tự bảo vệ</strong> (Không phụ thuộc mù quáng vào AI).
-                </span>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+            <div className="space-y-3">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 {/* Step 1 */}
-                <div className="p-4 rounded-xl bg-[#090e1a] border border-slate-800 hover:border-indigo-500/40 transition-colors flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="w-7 h-7 rounded-lg bg-indigo-950 border border-indigo-500/40 text-cyan-300 font-mono-tech font-bold flex items-center justify-center text-xs">
-                        01
-                      </span>
-                      <span className="text-[10px] font-mono-tech text-slate-400">BƯỚC 1</span>
-                    </div>
-                    <h4 className="font-bold text-white text-sm mb-1.5 flex items-center gap-1.5">
-                      Nhập Tin Nhắn Giả Lập
-                    </h4>
-                    <p className="text-xs text-slate-300 leading-relaxed">
-                      Chọn 1 trong các mẫu tin nhắn phổ biến (giả danh thầy cô, lừa trúng thưởng, đòi mã OTP, link lạ...) hoặc dán nội dung tin nhắn bất kỳ mà em muốn kiểm tra.
-                    </p>
+                <div className="p-3.5 rounded-xl bg-[#090e1a] border border-slate-800">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="w-6 h-6 rounded bg-indigo-950 border border-indigo-500/40 text-cyan-300 font-mono-tech font-bold flex items-center justify-center text-xs">
+                      1
+                    </span>
+                    <span className="text-[10px] font-mono-tech text-slate-400">BƯỚC 1</span>
                   </div>
-                  <div className="mt-3 pt-2 border-t border-slate-800/80 text-[11px] text-cyan-400 font-medium">
-                    ✓ Có 8 tình huống chuẩn THCS
-                  </div>
+                  <h4 className="font-bold text-white text-xs mb-1">
+                    Nhập Tin Nhắn
+                  </h4>
+                  <p className="text-xs text-slate-400 leading-normal">
+                    Chọn tình huống mẫu hoặc dán nội dung tin nhắn lạ cần kiểm tra.
+                  </p>
                 </div>
 
                 {/* Step 2 */}
-                <div className="p-4 rounded-xl bg-[#090e1a] border border-slate-800 hover:border-cyan-500/40 transition-colors flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="w-7 h-7 rounded-lg bg-cyan-950 border border-cyan-500/40 text-cyan-300 font-mono-tech font-bold flex items-center justify-center text-xs">
-                        02
-                      </span>
-                      <span className="text-[10px] font-mono-tech text-slate-400">BƯỚC 2</span>
-                    </div>
-                    <h4 className="font-bold text-white text-sm mb-1.5 flex items-center gap-1.5">
-                      Em Nhận Xét Trước
-                    </h4>
-                    <p className="text-xs text-slate-300 leading-relaxed">
-                      Trước khi máy quét AI chạy, em tự đưa ra quan điểm: Tin nhắn này có đáng ngờ không? Những dấu hiệu nào gây nghi ngờ? Và em dự định sẽ làm gì?
-                    </p>
+                <div className="p-3.5 rounded-xl bg-[#090e1a] border border-slate-800">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="w-6 h-6 rounded bg-cyan-950 border border-cyan-500/40 text-cyan-300 font-mono-tech font-bold flex items-center justify-center text-xs">
+                      2
+                    </span>
+                    <span className="text-[10px] font-mono-tech text-slate-400">BƯỚC 2</span>
                   </div>
-                  <div className="mt-3 pt-2 border-t border-slate-800/80 text-[11px] text-indigo-400 font-medium">
-                    ✓ Rèn luyện tư duy phản biện
-                  </div>
+                  <h4 className="font-bold text-white text-xs mb-1">
+                    Tự Nhận Xét Trước
+                  </h4>
+                  <p className="text-xs text-slate-400 leading-normal">
+                    Em tự đánh giá: Mức độ đáng ngờ, dấu hiệu bất thường và cách xử lý.
+                  </p>
                 </div>
 
                 {/* Step 3 */}
-                <div className="p-4 rounded-xl bg-[#090e1a] border border-slate-800 hover:border-emerald-500/40 transition-colors flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="w-7 h-7 rounded-lg bg-emerald-950 border border-emerald-500/40 text-emerald-300 font-mono-tech font-bold flex items-center justify-center text-xs">
-                        03
-                      </span>
-                      <span className="text-[10px] font-mono-tech text-slate-400">BƯỚC 3</span>
-                    </div>
-                    <h4 className="font-bold text-white text-sm mb-1.5 flex items-center gap-1.5">
-                      Xem Báo Cáo Giám Định
-                    </h4>
-                    <p className="text-xs text-slate-300 leading-relaxed">
-                      AI quét qua <strong>5 Kính Lọc An Toàn</strong>, so sánh phán đoán của em với kết quả AI, làm rõ bằng chứng và cung cấp quy trình 3 bước xử lý an toàn.
-                    </p>
+                <div className="p-3.5 rounded-xl bg-[#090e1a] border border-slate-800">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="w-6 h-6 rounded bg-emerald-950 border border-emerald-500/40 text-emerald-300 font-mono-tech font-bold flex items-center justify-center text-xs">
+                      3
+                    </span>
+                    <span className="text-[10px] font-mono-tech text-slate-400">BƯỚC 3</span>
                   </div>
-                  <div className="mt-3 pt-2 border-t border-slate-800/80 text-[11px] text-emerald-400 font-medium">
-                    ✓ Có sẵn hướng dẫn hỏi người lớn
-                  </div>
+                  <h4 className="font-bold text-white text-xs mb-1">
+                    Xem Báo Cáo AI
+                  </h4>
+                  <p className="text-xs text-slate-400 leading-normal">
+                    AI đối chiếu qua 5 Kính Lọc và gợi ý quy trình 3 bước tự bảo vệ.
+                  </p>
                 </div>
               </div>
             </div>
@@ -241,158 +218,96 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
 
           {/* TAB 2: MODULES */}
           {activeGuideTab === 'modules' && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               {/* Module 1 */}
               <div 
                 onClick={() => handleStartPractice('analyzer')}
-                className="p-4 rounded-xl bg-[#090e1a] border border-slate-800 hover:border-cyan-500/50 transition-all cursor-pointer group"
+                className="p-3 rounded-xl bg-[#090e1a] border border-slate-800 hover:border-cyan-500/50 transition-all cursor-pointer group flex items-start gap-3"
               >
-                <div className="flex items-center gap-2.5 mb-2">
-                  <div className="p-2 rounded-lg bg-indigo-950/80 text-cyan-300 border border-indigo-700/60 group-hover:scale-105 transition-transform">
-                    <ShieldCheck className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-white text-sm group-hover:text-cyan-300 transition-colors">
-                      1. Bàn Phân Tích Tin Nhắn (Chế độ chính)
-                    </h4>
-                    <span className="text-[10px] font-mono-tech text-slate-400">TAB: ANALYZER</span>
-                  </div>
+                <div className="p-2 rounded-lg bg-cyan-950 text-cyan-300 shrink-0">
+                  <ShieldCheck className="w-4 h-4" />
                 </div>
-                <p className="text-xs text-slate-300 leading-relaxed mb-3">
-                  Nơi nhập nội dung bất kỳ và thực hiện đầy đủ quy trình 3 bước sư phạm. Kết quả hiển thị trực quan mức độ rủi ro, phân tích chi tiết từng kính lọc và văn bản mẫu nhờ bố mẹ hỗ trợ.
-                </p>
-                <span className="inline-flex items-center gap-1 text-xs font-semibold text-cyan-400 group-hover:underline">
-                  Truy cập phòng này <ArrowRight className="w-3.5 h-3.5" />
-                </span>
+                <div>
+                  <h4 className="font-bold text-white text-xs group-hover:text-cyan-300">
+                    Bàn Phân Tích (Chính)
+                  </h4>
+                  <p className="text-[11px] text-slate-400 mt-0.5">
+                    Kiểm tra chi tiết mọi tin nhắn với 5 Kính Lọc an toàn.
+                  </p>
+                </div>
               </div>
 
               {/* Module 2 */}
               <div 
                 onClick={() => handleStartPractice('game')}
-                className="p-4 rounded-xl bg-[#090e1a] border border-slate-800 hover:border-indigo-500/50 transition-all cursor-pointer group"
+                className="p-3 rounded-xl bg-[#090e1a] border border-slate-800 hover:border-amber-500/50 transition-all cursor-pointer group flex items-start gap-3"
               >
-                <div className="flex items-center gap-2.5 mb-2">
-                  <div className="p-2 rounded-lg bg-amber-950/80 text-amber-300 border border-amber-700/60 group-hover:scale-105 transition-transform">
-                    <Target className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-white text-sm group-hover:text-amber-300 transition-colors">
-                      2. Phòng Huấn Luyện (Thám Tử Số)
-                    </h4>
-                    <span className="text-[10px] font-mono-tech text-slate-400">TAB: DRILL_MODE</span>
-                  </div>
+                <div className="p-2 rounded-lg bg-amber-950 text-amber-300 shrink-0">
+                  <Target className="w-4 h-4" />
                 </div>
-                <p className="text-xs text-slate-300 leading-relaxed mb-3">
-                  Chế độ trò chơi thực chiến: Bắt gặp các tình huống tin nhắn giả lập, học sinh chỉ được cộng điểm khi <strong>đúng mức độ rủi ro</strong> và <strong>chọn đúng căn cứ thuyết phục</strong>.
-                </p>
-                <span className="inline-flex items-center gap-1 text-xs font-semibold text-amber-400 group-hover:underline">
-                  Thử thách thăng hàm <ArrowRight className="w-3.5 h-3.5" />
-                </span>
+                <div>
+                  <h4 className="font-bold text-white text-xs group-hover:text-amber-300">
+                    Phòng Huấn Luyện (Thám Tử)
+                  </h4>
+                  <p className="text-[11px] text-slate-400 mt-0.5">
+                    Thử thách giải đố tình huống, nhận diện cạm bẫy để thăng hạng.
+                  </p>
+                </div>
               </div>
 
               {/* Module 3 */}
               <div 
-                onClick={() => handleStartPractice('compare')}
-                className="p-4 rounded-xl bg-[#090e1a] border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer group"
+                onClick={() => handleStartPractice('comparator')}
+                className="p-3 rounded-xl bg-[#090e1a] border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer group flex items-start gap-3"
               >
-                <div className="flex items-center gap-2.5 mb-2">
-                  <div className="p-2 rounded-lg bg-emerald-950/80 text-emerald-300 border border-emerald-700/60 group-hover:scale-105 transition-transform">
-                    <GitCompare className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-white text-sm group-hover:text-emerald-300 transition-colors">
-                      3. So Sánh Quang Phổ (V1 vs V2)
-                    </h4>
-                    <span className="text-[10px] font-mono-tech text-slate-400">TAB: DIFF_MATRIX</span>
-                  </div>
+                <div className="p-2 rounded-lg bg-emerald-950 text-emerald-300 shrink-0">
+                  <GitCompare className="w-4 h-4" />
                 </div>
-                <p className="text-xs text-slate-300 leading-relaxed mb-3">
-                  Đặt 2 phiên bản cạnh nhau: Tin nhắn đáng ngờ (V1) đối chiếu với phiên bản đã chỉnh sửa chuẩn mực (V2). Thấy rõ chỉ cần đổi 1 đường link hay bỏ đòi OTP là mức độ an toàn thay đổi 180 độ.
-                </p>
-                <span className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-400 group-hover:underline">
-                  So sánh trực quan <ArrowRight className="w-3.5 h-3.5" />
-                </span>
-              </div>
-
-              {/* Module 4 */}
-              <div 
-                onClick={() => handleStartPractice('demo3min')}
-                className="p-4 rounded-xl bg-[#090e1a] border border-slate-800 hover:border-purple-500/50 transition-all cursor-pointer group"
-              >
-                <div className="flex items-center gap-2.5 mb-2">
-                  <div className="p-2 rounded-lg bg-purple-950/80 text-purple-300 border border-purple-700/60 group-hover:scale-105 transition-transform">
-                    <Timer className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-white text-sm group-hover:text-purple-300 transition-colors">
-                      4. Demo 3 Phút (Chuẩn Sư Phạm)
-                    </h4>
-                    <span className="text-[10px] font-mono-tech text-slate-400">TAB: 7_STEP_GUIDE</span>
-                  </div>
+                <div>
+                  <h4 className="font-bold text-white text-xs group-hover:text-emerald-300">
+                    So Sánh Quang Phổ (V1 vs V2)
+                  </h4>
+                  <p className="text-[11px] text-slate-400 mt-0.5">
+                    Đối chiếu trực quan tin nhắn nguy hiểm và phiên bản an toàn.
+                  </p>
                 </div>
-                <p className="text-xs text-slate-300 leading-relaxed mb-3">
-                  Dành cho giáo viên giảng bài trên lớp hoặc học sinh thuyết trình nhóm: Dòng thời gian 7 bước dẫn dắt từ tình huống mở đầu, phản biện, AI phân tích đến thông điệp an toàn số.
-                </p>
-                <span className="inline-flex items-center gap-1 text-xs font-semibold text-purple-400 group-hover:underline">
-                  Xem kịch bản mẫu <ArrowRight className="w-3.5 h-3.5" />
-                </span>
               </div>
             </div>
           )}
 
           {/* TAB 3: SAFETY RULES */}
           {activeGuideTab === 'rules' && (
-            <div className="space-y-3.5">
-              <div className="p-3.5 rounded-xl bg-rose-950/30 border border-rose-800/60 text-rose-200">
-                <h4 className="font-bold text-white text-sm mb-1 flex items-center gap-2">
-                  <Lock className="w-4 h-4 text-rose-400 shrink-0" />
-                  <span>NGUYÊN TẮC VÀNG BẢO VỆ BẢN THÂN TRÊN MÔI TRƯỜNG MẠNG:</span>
-                </h4>
-                <p className="text-xs text-slate-300">
-                  Học sinh THCS cần khắc ghi những điều sau khi nhận bất kỳ tin nhắn nào yêu cầu hành động gấp:
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                <div className="p-3 rounded-xl bg-[#090e1a] border border-slate-800 flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                  <div>
-                    <strong className="text-white block mb-0.5">1. Tuyệt đối không chia sẻ mã OTP / Mật khẩu</strong>
-                    <span className="text-slate-300">Không một ngân hàng, nhà trường hay nhà mạng nào yêu cầu bạn gửi mã OTP hay mật khẩu cá nhân qua tin nhắn.</span>
-                  </div>
-                </div>
-
-                <div className="p-3 rounded-xl bg-[#090e1a] border border-slate-800 flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                  <div>
-                    <strong className="text-white block mb-0.5">2. Cảnh giác với link lạ viết tắt / sai chính tả</strong>
-                    <span className="text-slate-300">Tuyệt đối không nhấn vào các đường link có đuôi lạ như `.xyz`, `.cc`, `.top` hay mạo danh các tổ chức uy tín.</span>
-                  </div>
-                </div>
-
-                <div className="p-3 rounded-xl bg-[#090e1a] border border-slate-800 flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                  <div>
-                    <strong className="text-white block mb-0.5">3. Chậm lại khi bị dọa nạt hoặc hối thúc</strong>
-                    <span className="text-slate-300">Kẻ xấu luôn tạo áp lực "khóa tài khoản trong 5 phút", "bị phạt ngay". Càng gấp càng cần dừng lại để kiểm chứng.</span>
-                  </div>
-                </div>
-
-                <div className="p-3 rounded-xl bg-[#090e1a] border border-slate-800 flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                  <div>
-                    <strong className="text-white block mb-0.5">4. Luôn hỏi ý kiến bố mẹ hoặc thầy cô</strong>
-                    <span className="text-slate-300">Khi cảm thấy phân vân hoặc lo sợ, việc đầu tiên là cho người lớn đáng tin cậy xem tin nhắn để cùng xử lý.</span>
-                  </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+              <div className="p-2.5 rounded-xl bg-[#090e1a] border border-slate-800 flex items-start gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                <div>
+                  <strong className="text-white block">1. Không bao giờ gửi OTP / Mật khẩu</strong>
+                  <span className="text-slate-400 text-[11px]">Không tổ chức nào yêu cầu gửi OTP qua tin nhắn.</span>
                 </div>
               </div>
 
-              {/* Privacy sandbox note */}
-              <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-[11px] text-slate-400 flex items-center justify-between gap-3">
-                <span className="flex items-center gap-1.5">
-                  <Radio className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
-                  <span><strong>Hộp Cát Bảo Mật:</strong> Ứng dụng chạy trên môi trường an toàn, không lưu trữ số điện thoại hay nội dung riêng tư của học sinh.</span>
-                </span>
+              <div className="p-2.5 rounded-xl bg-[#090e1a] border border-slate-800 flex items-start gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                <div>
+                  <strong className="text-white block">2. Cảnh giác với đường link lạ</strong>
+                  <span className="text-slate-400 text-[11px]">Không bấm link đuôi lạ (.xyz, .cc) hay sai chính tả.</span>
+                </div>
+              </div>
+
+              <div className="p-2.5 rounded-xl bg-[#090e1a] border border-slate-800 flex items-start gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                <div>
+                  <strong className="text-white block">3. Chậm lại khi bị hối thúc, dọa dẫm</strong>
+                  <span className="text-slate-400 text-[11px]">Càng gấp càng cần dừng lại để kiểm chứng.</span>
+                </div>
+              </div>
+
+              <div className="p-2.5 rounded-xl bg-[#090e1a] border border-slate-800 flex items-start gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                <div>
+                  <strong className="text-white block">4. Luôn hỏi ý kiến bố mẹ hoặc thầy cô</strong>
+                  <span className="text-slate-400 text-[11px]">Nhờ người lớn xem và xác minh trước khi hành động.</span>
+                </div>
               </div>
             </div>
           )}
@@ -414,15 +329,6 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
 
           {/* Action buttons */}
           <div className="flex items-center gap-2.5 w-full sm:w-auto justify-end">
-            <button
-              type="button"
-              id="btn-onboarding-demo"
-              onClick={() => handleStartPractice('demo3min')}
-              className="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-colors cursor-pointer"
-            >
-              Xem Demo 3 Phút
-            </button>
-
             <button
               type="button"
               id="btn-onboarding-start"

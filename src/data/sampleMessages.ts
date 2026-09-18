@@ -14,13 +14,12 @@ export interface SampleMessageItem {
 export const SAMPLE_MESSAGES: SampleMessageItem[] = [
   {
     id: 'demo-bank-v1',
-    title: 'Ngân hàng cảnh báo khóa tài khoản (Demo 3 phút)',
+    title: 'Ngân hàng cảnh báo khóa tài khoản (Mạo danh)',
     category: 'bank',
-    badge: 'Mẫu Demo Chuẩn',
+    badge: 'Nguy hiểm cao',
     preview: 'Ngân hàng thông báo tài khoản của bạn sắp bị khóa...',
     content: 'Ngân hàng thông báo tài khoản của bạn sắp bị khóa. Hãy gửi mã xác thực ngay để mở lại tài khoản.',
     expectedRisk: 'Có dấu hiệu đáng ngờ',
-    isDemoMain: true,
   },
   {
     id: 'demo-bank-v2',

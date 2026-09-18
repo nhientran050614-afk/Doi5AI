@@ -21,7 +21,6 @@ import { StudentPreEvaluationSection } from './components/StudentPreEvaluationSe
 import { ResultReportSection } from './components/ResultReportSection';
 import { ScenarioGame } from './components/ScenarioGame';
 import { MessageComparator } from './components/MessageComparator';
-import { Demo3MinGuide } from './components/Demo3MinGuide';
 import { CyberClickEffect } from './components/CyberClickEffect';
 import { OnboardingModal } from './components/OnboardingModal';
 import { Team5IntroSplash } from './components/Team5IntroSplash';
@@ -38,13 +37,7 @@ import { cyberAudio } from './utils/cyberAudio';
 export default function App() {
   const [showIntro, setShowIntro] = useState<boolean>(true);
   const [currentTab, setCurrentTab] = useState<AppTab>('analyzer');
-  const [showOnboarding, setShowOnboarding] = useState<boolean>(() => {
-    try {
-      return localStorage.getItem('cyber_onboarding_dismissed_v2') !== 'true';
-    } catch {
-      return true;
-    }
-  });
+  const [showOnboarding, setShowOnboarding] = useState<boolean>(true);
 
   // Input & Pre-Evaluation state
   const defaultSample = SAMPLE_MESSAGES[0]; // Demo 3-phút message
@@ -171,21 +164,6 @@ export default function App() {
     setCurrentTab('comparator');
   };
 
-  const handleLoadIntoAnalyzer = (msg: string) => {
-    cyberAudio.playClick();
-    setMessageText(msg);
-    setSelectedSampleId('');
-    setAnalysisResult(null);
-    setCurrentTab('analyzer');
-  };
-
-  const handleOpenComparator = (m1: string, m2: string) => {
-    cyberAudio.playClick();
-    setComparatorM1(m1);
-    setComparatorM2(m2);
-    setCurrentTab('comparator');
-  };
-
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-cyan-500 selection:text-black">
       {/* Intro Splash with Water-Blue Gear & 'PROJECT BY TEAM 5' */}
@@ -222,24 +200,26 @@ export default function App() {
         {/* TAB 1: PHÂN TÍCH TIN NHẮN (Core Workflow) */}
         {currentTab === 'analyzer' && (
           <div className="space-y-6">
-            {/* High-Tech Tactical Banner */}
-            <div className="bg-[#0e1526] rounded-2xl border border-slate-800 p-5 sm:p-6 shadow-xl shadow-black/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 relative overflow-hidden">
+            {/* High-Tech Clean Banner */}
+            <div className="bg-[#0e1526] rounded-2xl border border-slate-800 p-4 sm:p-5 shadow-xl shadow-black/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 relative overflow-hidden">
               <div className="absolute top-0 left-0 w-32 h-1 bg-gradient-to-r from-cyan-400 via-indigo-500 to-transparent" />
 
-              <div className="space-y-1.5">
-                <div className="flex items-center gap-2">
-                  <span className="font-mono-tech px-2.5 py-0.5 rounded text-[10px] font-semibold bg-indigo-950 text-indigo-300 border border-indigo-700/60">
-                    CYBER_PIPELINE // 3 BƯỚC
+              <div className="space-y-1">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="font-mono-tech px-2 py-0.5 rounded text-[10px] font-bold bg-cyan-950 text-cyan-300 border border-cyan-700/60">
+                    3 BƯỚC
                   </span>
-                  <h2 className="text-base sm:text-lg font-bold text-white tracking-tight flex items-center gap-2">
-                    <span>Hệ Thống Nhận Diện Bẫy Lừa Đảo Cho Học Sinh THCS</span>
+                  <h2 className="text-base sm:text-lg font-bold text-white tracking-tight">
+                    Cảnh Báo Tin Nhắn Đáng Ngờ
                   </h2>
                 </div>
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-3xl">
-                  <strong className="text-white">1. Nhập tin nhắn giả lập</strong> ➜{' '}
-                  <strong className="text-white">2. Em tự nhận xét trước</strong> ➜{' '}
-                  <strong className="text-cyan-300 font-semibold">3. AI quét 5 Kính Lọc</strong> để đối chiếu phán đoán và cung cấp quy trình tự bảo vệ an toàn.
-                </p>
+                <div className="flex items-center gap-2 text-xs text-slate-300 flex-wrap">
+                  <span className="text-slate-300 font-medium">1. Chọn tin</span>
+                  <span className="text-slate-500">➜</span>
+                  <span className="text-slate-300 font-medium">2. Tự nhận xét</span>
+                  <span className="text-slate-500">➜</span>
+                  <span className="text-cyan-300 font-semibold">3. AI đối chiếu</span>
+                </div>
               </div>
 
               <div className="flex items-center gap-2 flex-wrap shrink-0">
@@ -255,19 +235,6 @@ export default function App() {
                 >
                   <HelpCircle className="w-3.5 h-3.5 text-cyan-400" />
                   <span>HƯỚNG DẪN</span>
-                </button>
-
-                <button
-                  type="button"
-                  id="btn-goto-demo-quick"
-                  onClick={() => {
-                    cyberAudio.playClick();
-                    setCurrentTab('demo3min');
-                  }}
-                  className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 text-white font-mono-tech text-xs font-semibold transition-all flex items-center gap-2 shadow-lg shadow-cyan-950/40 border border-cyan-400/40 cursor-pointer"
-                >
-                  <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-                  <span>DEMO 3 PHÚT</span>
                 </button>
               </div>
             </div>
@@ -313,18 +280,10 @@ export default function App() {
           </div>
         )}
 
-        {/* TAB 2: DEMO 3 PHÚT (Educational 7-step presentation) */}
-        {currentTab === 'demo3min' && (
-          <Demo3MinGuide
-            onLoadIntoAnalyzer={handleLoadIntoAnalyzer}
-            onOpenComparator={handleOpenComparator}
-          />
-        )}
-
-        {/* TAB 3: TRÒ CHƠI TÌNH HUỐNG (Mode 1) */}
+        {/* TAB 2: TRÒ CHƠI TÌNH HUỐNG (Mode 1) */}
         {currentTab === 'game' && <ScenarioGame />}
 
-        {/* TAB 4: SO SÁNH HAI TIN NHẮN (Mode 2) */}
+        {/* TAB 3: SO SÁNH HAI TIN NHẮN (Mode 2) */}
         {currentTab === 'comparator' && (
           <MessageComparator
             initialMessage1={comparatorM1}
