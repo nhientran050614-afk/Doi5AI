@@ -32,6 +32,7 @@ import {
   StudentPreEvaluation 
 } from './types';
 import { checkMessageRules } from './utils/ruleEngine';
+import { analyzeMessageLocally } from './utils/localAnalyzer';
 import { cyberAudio } from './utils/cyberAudio';
 
 export default function App() {
@@ -112,21 +113,33 @@ export default function App() {
       // Execute code-based rule check
       const ruleCheck = checkMessageRules(trimmed);
 
-      const response = await fetch('/api/analyze-message', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: trimmed,
-          studentPreEval,
-        }),
-      });
+      let data: AnalysisResult | null = null;
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Lỗi khi phân tích tin nhắn.');
+      try {
+        const response = await fetch('/api/analyze-message', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message: trimmed,
+            studentPreEval,
+          }),
+        });
+
+        const contentType = response.headers.get('content-type') || '';
+        if (response.ok && contentType.includes('application/json')) {
+          data = await response.json();
+        } else {
+          console.warn('API returned non-JSON or error status, switching to local analysis engine');
+        }
+      } catch (fetchErr) {
+        console.warn('Network fetch error, switching to local analysis engine:', fetchErr);
       }
 
-      const data: AnalysisResult = await response.json();
+      // If backend was unreachable or returned non-JSON (e.g. proxy HTML error), use resilient local analyzer
+      if (!data) {
+        data = analyzeMessageLocally(trimmed, studentPreEval);
+      }
+
       setAnalysisResult({
         ...data,
         ruleCheck: data.ruleCheck || ruleCheck,
@@ -149,7 +162,7 @@ export default function App() {
     } catch (err: any) {
       console.error(err);
       cyberAudio.playThreatAlert();
-      setErrorMessage(err.message || 'Không thể thực hiện phân tích bằng AI. Vui lòng thử lại.');
+      setErrorMessage(err.message || 'Không thể thực hiện phân tích. Vui lòng thử lại.');
     } finally {
       setIsLoading(false);
     }

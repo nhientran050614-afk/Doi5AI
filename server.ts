@@ -439,6 +439,11 @@ function generateDeterministicComparison(m1: string, m2: string) {
 
 // Vite middleware or static serving
 async function startServer() {
+  // Guard all unhandled /api/* routes so they return JSON instead of SPA index.html
+  app.all('/api/*', (req, res) => {
+    res.status(404).json({ error: 'API route not found' });
+  });
+
   if (process.env.NODE_ENV !== 'production') {
     const vite = await createViteServer({
       server: { middlewareMode: true },

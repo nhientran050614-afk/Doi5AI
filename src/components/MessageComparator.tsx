@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { ComparisonResult, RiskLevel } from '../types';
 import { cyberAudio } from '../utils/cyberAudio';
+import { compareMessagesLocally } from '../utils/localAnalyzer';
 
 interface MessageComparatorProps {
   initialMessage1?: string;
@@ -76,22 +77,37 @@ export const MessageComparator: React.FC<MessageComparatorProps> = ({
     setError(null);
 
     try {
-      const res = await fetch('/api/compare-messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message1: message1.trim(), message2: message2.trim() }),
-      });
+      let data: ComparisonResult | null = null;
 
-      if (!res.ok) {
-        throw new Error('Lỗi khi so sánh hai tin nhắn');
+      try {
+        const res = await fetch('/api/compare-messages', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message1: message1.trim(), message2: message2.trim() }),
+        });
+
+        const contentType = res.headers.get('content-type') || '';
+        if (res.ok && contentType.includes('application/json')) {
+          data = await res.json();
+        } else {
+          console.warn('Compare API returned non-JSON, using local comparison engine');
+        }
+      } catch (fetchErr) {
+        console.warn('Network error on compare API, using local comparison engine:', fetchErr);
       }
 
-      const data = await res.json();
+      if (!data) {
+        data = compareMessagesLocally(message1.trim(), message2.trim());
+      }
+
       setComparisonResult(data);
       cyberAudio.playSuccess();
     } catch (err: any) {
-      setError(err.message || 'Không thể kết nối dịch vụ so sánh.');
-      cyberAudio.playThreatAlert();
+      console.error('Error during comparison:', err);
+      // Fallback guarantees it never fails
+      const fallbackData = compareMessagesLocally(message1.trim(), message2.trim());
+      setComparisonResult(fallbackData);
+      cyberAudio.playSuccess();
     } finally {
       setIsLoading(false);
     }
